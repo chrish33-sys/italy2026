@@ -1,4 +1,3 @@
-
 (function(){
  const slides=[
   {src:'questionnaire_result_view_2.png',caption:'Result view 2 of 5'},

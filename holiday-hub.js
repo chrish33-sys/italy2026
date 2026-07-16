@@ -16,23 +16,41 @@
   {name:'Luino market',when:'Wednesday, around 9:00–16:00',where:'Luino',journey:'Larger excursion across/around the lake',map:'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Luino+market+Lake+Maggiore+Italy&travelmode=driving'}];
  let i=0;const box=document.getElementById('marketCard'),cap=document.getElementById('marketCaption'),prev=document.getElementById('prevMarket'),next=document.getElementById('nextMarket');
  function draw(){if(!box)return;const m=markets[i];box.innerHTML=`<h4>${m.name}</h4><div class="market-row"><b>When</b><span>${m.when}</span><b>Where</b><span>${m.where}</span><b>How far</b><span>${m.journey}</span></div><div class="links"><a class="btn map" href="${m.map}" target="_blank">Directions: ${m.name}</a></div>`;if(cap)cap.textContent=`Market ${i+1} of ${markets.length}`;}
- function prevMarket(){i=(i-1+markets.length)%markets.length;draw();}
- function nextMarket(){i=(i+1)%markets.length;draw();}
- function bindNav(el,fn){if(!el)return;el.type='button';el.style.touchAction='manipulation';el.addEventListener('click',fn);el.addEventListener('pointerup',function(e){if(e.pointerType==='touch'){e.preventDefault();fn();}});}
- bindNav(prev,prevMarket);bindNav(next,nextMarket);
+ function prevM(){i=(i-1+markets.length)%markets.length;draw();}
+ function nextM(){i=(i+1)%markets.length;draw();}
+ if(prev)prev.addEventListener('click',prevM);
+ if(next)next.addEventListener('click',nextM);
  draw();
 })();
 (function(){
- const links=document.querySelectorAll('a[href]');
- links.forEach(function(a){
-  const href=a.getAttribute('href')||'';
-  if(!href||href.startsWith('#')||href.startsWith('mailto:')||href.startsWith('tel:')) return;
-  try{
-   const u=new URL(href,window.location.href);
-   if(u.origin!==window.location.origin){
-    a.setAttribute('target','_blank');
-    a.setAttribute('rel','noopener noreferrer');
-   }
-  }catch(_e){}
+ const VOTE_KEY='italy2026_votes_v1';
+ function safeRead(){
+  try{return JSON.parse(localStorage.getItem(VOTE_KEY)||'{}');}catch(e){return {};}
+ }
+ function safeWrite(data){
+  try{localStorage.setItem(VOTE_KEY,JSON.stringify(data));}catch(e){}
+ }
+ const state=safeRead();
+ document.querySelectorAll('.vote').forEach(function(block){
+  const key=block.getAttribute('data-vote-key');
+  if(!key)return;
+  if(!state[key]) state[key]={up:0,down:0};
+  const upCount=block.querySelector('[data-role="up"]');
+  const downCount=block.querySelector('[data-role="down"]');
+  function render(){
+   if(upCount) upCount.textContent=String(state[key].up||0);
+   if(downCount) downCount.textContent=String(state[key].down||0);
+  }
+  block.querySelector('.vote-btn.up')?.addEventListener('click',function(){
+   state[key].up=(state[key].up||0)+1;
+   safeWrite(state);
+   render();
+  });
+  block.querySelector('.vote-btn.down')?.addEventListener('click',function(){
+   state[key].down=(state[key].down||0)+1;
+   safeWrite(state);
+   render();
+  });
+  render();
  });
 })();

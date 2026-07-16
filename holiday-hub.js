@@ -10,12 +10,12 @@
 })();
 (function(){
  const markets=[
-  {name:'Stresa market',when:'Friday morning, around 8:00–13:00',where:'Piazza Capucci, Stresa',journey:'Local / walkable from the villa',map:'https://www.google.com/maps/search/?api=1&query=Piazza+Capucci+Stresa+Italy'},
-  {name:'Verbania Intra market',when:'Saturday, around 9:00–16:00',where:'Intra, Verbania',journey:'Nearby lake town; car/taxi/boat option depending on plan',map:'https://www.google.com/maps/search/?api=1&query=Intra+Verbania+market+Italy'},
-  {name:'Cannobio market',when:'Sunday morning, around 8:00–13:00',where:'Cannobio lakefront',journey:'Excursion up the lake',map:'https://www.google.com/maps/search/?api=1&query=Cannobio+market+Lake+Maggiore+Italy'},
-  {name:'Luino market',when:'Wednesday, around 9:00–16:00',where:'Luino',journey:'Larger excursion across/around the lake',map:'https://www.google.com/maps/search/?api=1&query=Luino+market+Lake+Maggiore+Italy'}];
+  {name:'Stresa market',when:'Friday morning, around 8:00–13:00',where:'Piazza Capucci, Stresa',journey:'Local / walkable from the villa',map:'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Piazza+Capucci+Stresa+Italy&travelmode=driving'},
+  {name:'Verbania Intra market',when:'Saturday, around 9:00–16:00',where:'Intra, Verbania',journey:'Nearby lake town; car/taxi/boat option depending on plan',map:'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Intra+Verbania+market+Italy&travelmode=driving'},
+  {name:'Cannobio market',when:'Sunday morning, around 8:00–13:00',where:'Cannobio lakefront',journey:'Excursion up the lake',map:'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Cannobio+market+Lake+Maggiore+Italy&travelmode=driving'},
+  {name:'Luino market',when:'Wednesday, around 9:00–16:00',where:'Luino',journey:'Larger excursion across/around the lake',map:'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=Luino+market+Lake+Maggiore+Italy&travelmode=driving'}];
  let i=0;const box=document.getElementById('marketCard'),cap=document.getElementById('marketCaption'),prev=document.getElementById('prevMarket'),next=document.getElementById('nextMarket');
- function draw(){if(!box)return;const m=markets[i];box.innerHTML=`<h4>${m.name}</h4><div class="market-row"><b>When</b><span>${m.when}</span><b>Where</b><span>${m.where}</span><b>How far</b><span>${m.journey}</span></div><div class="links"><a class="btn map" href="${m.map}" target="_blank">Map: ${m.name}</a></div>`;if(cap)cap.textContent=`Market ${i+1} of ${markets.length}`;}
+ function draw(){if(!box)return;const m=markets[i];box.innerHTML=`<h4>${m.name}</h4><div class="market-row"><b>When</b><span>${m.when}</span><b>Where</b><span>${m.where}</span><b>How far</b><span>${m.journey}</span></div><div class="links"><a class="btn map" href="${m.map}" target="_blank">Directions: ${m.name}</a></div>`;if(cap)cap.textContent=`Market ${i+1} of ${markets.length}`;}
  function prevMarket(){i=(i-1+markets.length)%markets.length;draw();}
  function nextMarket(){i=(i+1)%markets.length;draw();}
  function bindNav(el,fn){if(!el)return;el.type='button';el.style.touchAction='manipulation';el.addEventListener('click',fn);el.addEventListener('pointerup',function(e){if(e.pointerType==='touch'){e.preventDefault();fn();}});}

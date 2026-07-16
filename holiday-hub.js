@@ -4,8 +4,8 @@
  function render(){if(!img||!cap)return;img.src=slides[idx].src;cap.textContent=slides[idx].caption;}
  function prevSlide(){idx=(idx-1+slides.length)%slides.length;render();}
  function nextSlide(){idx=(idx+1)%slides.length;render();}
- if(prev){prev.addEventListener('click',prevSlide);prev.addEventListener('touchstart',function(e){e.preventDefault();prevSlide();},{passive:false});}
- if(next){next.addEventListener('click',nextSlide);next.addEventListener('touchstart',function(e){e.preventDefault();nextSlide();},{passive:false});}
+ function bindNav(el,fn){if(!el)return;el.type='button';el.style.touchAction='manipulation';el.addEventListener('click',fn);el.addEventListener('pointerup',function(e){if(e.pointerType==='touch'){e.preventDefault();fn();}});}
+ bindNav(prev,prevSlide);bindNav(next,nextSlide);
  render();
 })();
 (function(){
@@ -18,8 +18,8 @@
  function draw(){if(!box)return;const m=markets[i];box.innerHTML=`<h4>${m.name}</h4><div class="market-row"><b>When</b><span>${m.when}</span><b>Where</b><span>${m.where}</span><b>How far</b><span>${m.journey}</span></div><div class="links"><a class="btn map" href="${m.map}" target="_blank">Map: ${m.name}</a></div>`;if(cap)cap.textContent=`Market ${i+1} of ${markets.length}`;}
  function prevMarket(){i=(i-1+markets.length)%markets.length;draw();}
  function nextMarket(){i=(i+1)%markets.length;draw();}
- if(prev){prev.addEventListener('click',prevMarket);prev.addEventListener('touchstart',function(e){e.preventDefault();prevMarket();},{passive:false});}
- if(next){next.addEventListener('click',nextMarket);next.addEventListener('touchstart',function(e){e.preventDefault();nextMarket();},{passive:false});}
+ function bindNav(el,fn){if(!el)return;el.type='button';el.style.touchAction='manipulation';el.addEventListener('click',fn);el.addEventListener('pointerup',function(e){if(e.pointerType==='touch'){e.preventDefault();fn();}});}
+ bindNav(prev,prevMarket);bindNav(next,nextMarket);
  draw();
 })();
 (function(){

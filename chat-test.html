@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chatbot Test Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 16px; }
+    .box { border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    .row { display: flex; gap: 8px; margin-top: 12px; }
+    input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; }
+    #sendBtn { background: #111; color: #fff; }
+    .msg { padding: 10px 12px; border-radius: 8px; margin: 10px 0; white-space: pre-wrap; }
+    .user { background: #eef6ff; }
+    .bot { background: #f6f6f6; }
+    .small { color: #666; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>Chatbot Test (Temporary)</h1>
+  <p class="small">This page is for testing only on <code>chatbot-test</code> branch.</p>
+
+  <div class="box">
+    <div id="chatLog"></div>
+    <div class="row">
+      <input id="msgInput" type="text" placeholder="Ask something..." />
+      <button id="sendBtn" type="button">Send</button>
+    </div>
+  </div>
+
+  <script src="chat-test.js"></script>
+</body>
+</html>

@@ -2,6 +2,9 @@
   const log = document.getElementById('chatLog');
   const input = document.getElementById('msgInput');
   const send = document.getElementById('sendBtn');
+  const notice = document.getElementById('chatDisabledNotice');
+
+  let chatEnabled = true;
 
   function addMessage(text, cls) {
     const div = document.createElement('div');
@@ -11,9 +14,18 @@
     log.scrollTop = log.scrollHeight;
   }
 
+  function disableChatUI(reason) {
+    chatEnabled = false;
+    input.disabled = true;
+    send.disabled = true;
+    input.placeholder = 'Chat is temporarily disabled';
+    if (notice) notice.style.display = 'block';
+    if (reason) addMessage(`Bot: ${reason}`, 'bot');
+  }
+
   async function sendMessage() {
     const message = (input.value || '').trim();
-    if (!message) return;
+    if (!message || !chatEnabled) return;
 
     addMessage(`You: ${message}`, 'user');
     input.value = '';
@@ -29,16 +41,22 @@
 
       const data = await res.json();
       if (!res.ok) {
-        addMessage(`Bot error: ${JSON.stringify(data, null, 2)}`, 'bot');
+        if (data?.code === 'chat_disabled') {
+          disableChatUI('Chat is temporarily disabled. Coming soon.');
+        } else {
+          addMessage('Bot: Sorry, chat is unavailable right now. Please try again later.', 'bot');
+        }
       } else {
         addMessage(`Bot: ${data.reply}`, 'bot');
       }
     } catch (err) {
-      addMessage(`Network error: ${String(err?.message || err)}`, 'bot');
+      addMessage('Bot: Network error. Please try again.', 'bot');
     } finally {
-      send.disabled = false;
-      send.textContent = 'Send';
-      input.focus();
+      if (chatEnabled) {
+        send.disabled = false;
+        send.textContent = 'Send';
+        input.focus();
+      }
     }
   }
 

@@ -3,6 +3,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (process.env.CHAT_ENABLED !== 'true') {
+    return res.status(503).json({
+      error: 'Chat is currently disabled',
+      code: 'chat_disabled'
+    });
+  }
+
   try {
     const { message } = req.body || {};
     if (!message || typeof message !== 'string') {

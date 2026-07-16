@@ -11,15 +11,26 @@
     input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
     button { padding: 10px 14px; border: 0; border-radius: 8px; cursor: pointer; }
     #sendBtn { background: #111; color: #fff; }
+    #sendBtn[disabled] { background: #999; cursor: not-allowed; }
     .msg { padding: 10px 12px; border-radius: 8px; margin: 10px 0; white-space: pre-wrap; }
     .user { background: #eef6ff; }
     .bot { background: #f6f6f6; }
     .small { color: #666; font-size: 13px; }
+    .notice {
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #f0d68c;
+      background: #fff8e1;
+      color: #5c4600;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <h1>Chatbot Test (Temporary)</h1>
   <p class="small">This page is for testing only on <code>chatbot-test</code> branch.</p>
+  <div id="chatDisabledNotice" class="notice" style="display:none;">Chat is temporarily disabled. Coming soon.</div>
 
   <div class="box">
     <div id="chatLog"></div>

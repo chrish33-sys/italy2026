@@ -20,9 +20,9 @@ const MAP_BASE = "https://" + "www.google.com/maps/search/?api=1&query=";
 
   let idx = 0;
 
-  const img*= document.getElementById("resultS*ideImage");
-  const cap = document*getElementById("resultSlideCaption*);
-  const prev = document.getElem*ntById("prevResultSlide");
+  const img = document.getElementById("resultSlideImage");
+  const cap = document.getElementById("resultSlideCaption");
+  const prev = document.getElementById("prevResultSlide");
   const next = document.getElementById("nextResultSlide");
 
   function render() {
@@ -103,7 +103,7 @@ const MAP_BASE = "https://" + "www.google.com/maps/search/?api=1&query=";
       "<b>How far</b><span>" + m.journey + "</span>" +
       "</div>" +
       "<div class=\"links\">" +
-      "\""Map: " + m.name + "</a>" +
+      "<a href=\"" + m.map + "\" target=\"_blank\" rel=\"noopener\">Map: " + m.name + "</a>" +
       "</div>";
 
     if (cap) {

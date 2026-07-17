@@ -1,15 +1,17 @@
-const SUPABASE_URL = "https://dxfdfqaouzcqdjcfqxpa.supabase.co";
+const SUPABASE_URL = "https://" + "dxfdfqaouzcqdjcfqxpa.supabase.co";
 const SUPABASE_KEY = "sb_publishable_HCnmpHVljiBGXPDx2MtvXg_mn7Wvl1-";
 
 const supabaseClient = window.supabase
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
   : null;
 
+const MAP_BASE = "https://" + "www.google.com/maps/search/?api=1&query=";
+
 /* -------------------------------------------------------
    Questionnaire results carousel
 ------------------------------------------------------- */
 (function () {
-  const slides = [
+  const slides = *
     { src: "questionnaire_result_view_2.png", caption: "Result view 2 of 5" },
     { src: "questionnaire_result_view_3.png", caption: "Result view 3 of 5" },
     { src: "questionnaire_result_view_4.png", caption: "Result view 4 of 5" },
@@ -18,9 +20,9 @@ const supabaseClient = window.supabase
 
   let idx = 0;
 
-  const img = document.getElementById("resultSlideImage");
-  const cap = document.getElementById("resultSlideCaption");
-  const prev = document.getElementById("prevResultSlide");
+  const img*= document.getElementById("resultS*ideImage");
+  const cap = document*getElementById("resultSlideCaption*);
+  const prev = document.getElem*ntById("prevResultSlide");
   const next = document.getElementById("nextResultSlide");
 
   function render() {
@@ -56,28 +58,28 @@ const supabaseClient = window.supabase
       when: "Friday morning, around 8:00-13:00",
       where: "Piazza Capucci, Stresa",
       journey: "Local / walkable from the villa",
-      map: "https://www.google.com/maps/search/?api=1&query=Piazza+Capucci+Stresa+Italy"
+      map: MAP_BASE + "Piazza+Capucci+Stresa+Italy"
     },
     {
       name: "Verbania Intra market",
       when: "Saturday, around 9:00-16:00",
       where: "Intra, Verbania",
       journey: "Nearby lake town; car/taxi/boat option depending on plan",
-      map: "https://www.google.com/maps/search/?api=1&query=Intra+Verbania+market+Italy"
+      map: MAP_BASE + "Intra+Verbania+market+Italy"
     },
     {
       name: "Cannobio market",
       when: "Sunday morning, around 8:00-13:00",
       where: "Cannobio lakefront",
       journey: "Excursion up the lake",
-      map: "https://www.google.com/maps/search/?api=1&query=Cannobio+market+Lake+Maggiore+Italy"
+      map: MAP_BASE + "Cannobio+market+Lake+Maggiore+Italy"
     },
     {
       name: "Luino market",
       when: "Wednesday, around 9:00-16:00",
       where: "Luino",
       journey: "Larger excursion across/around the lake",
-      map: "https://www.google.com/maps/search/?api=1&query=Luino+market+Lake+Maggiore+Italy"
+      map: MAP_BASE + "Luino+market+Lake+Maggiore+Italy"
     }
   ];
 
@@ -171,7 +173,9 @@ const supabaseClient = window.supabase
   }
 
   function setCardVoteState(activity, vote) {
-    const card = document.querySelector(".activity[data-activity=\"" + activity + "\"]");
+    const selector = ".activity[data-activity=\"" + activity + "\"]";
+    const card = document.querySelector(selector);
+
     if (!card) return;
 
     const up = card.querySelector(".up");
@@ -208,7 +212,9 @@ const supabaseClient = window.supabase
     });
 
     result.data.forEach(function (row) {
-      const card = document.querySelector(".activity[data-activity=\"" + row.activity + "\"]");
+      const selector = ".activity[data-activity=\"" + row.activity + "\"]";
+      const card = document.querySelector(selector);
+
       if (!card) return;
 
       const upCount = card.querySelector(".up span");
@@ -225,6 +231,7 @@ const supabaseClient = window.supabase
 
   async function loadMyVotes() {
     const voter = localStorage.getItem("italy2026_voter");
+
     if (!voter) return;
 
     const result = await supabaseClient
@@ -264,19 +271,18 @@ const supabaseClient = window.supabase
     const voter = getVoterName();
     const existing = await getExistingVote(activity, voter);
 
-    const nextVote =
-      existing && existing.vote === requestedVote
-        ? "none"
-        : requestedVote;
+    let nextVote = requestedVote;
+
+    if (existing && existing.vote === requestedVote) {
+      nextVote = "none";
+    }
 
     let result;
 
     if (existing && existing.id) {
       result = await supabaseClient
         .from("votes")
-        .update({
-          vote: nextVote
-        })
+        .update({ vote: nextVote })
         .eq("id", existing.id);
     } else {
       result = await supabaseClient

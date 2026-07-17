@@ -11,7 +11,7 @@ const MAP_BASE = "https://" + "www.google.com/maps/search/?api=1&query=";
    Questionnaire results carousel
 ------------------------------------------------------- */
 (function () {
-  const slides = *
+  const slides = [
     { src: "questionnaire_result_view_2.png", caption: "Result view 2 of 5" },
     { src: "questionnaire_result_view_3.png", caption: "Result view 3 of 5" },
     { src: "questionnaire_result_view_4.png", caption: "Result view 4 of 5" },
